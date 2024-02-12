@@ -1,14 +1,13 @@
 package com.ashot.musicat.entity;
 
-import com.ashot.musicat.utils.AlbumFormat;
-import com.ashot.musicat.utils.MusicGenre;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.mapping.Join;
 
 import java.util.List;
-
-import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 public class Album {
@@ -19,15 +18,13 @@ public class Album {
     @NotNull(message = "Please enter an album title")
     @NotBlank(message = "Please enter an album title")
     private String title;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "artist_id")
     private Artist artist;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Track> tracks;
-    @Enumerated(STRING)
-    private AlbumFormat format;
-    @Enumerated(STRING)
-    private MusicGenre genre;
+    private String format;
+    private String genre;
 
     public Album(String title, List<Track> tracks) {
         this.title = title;
@@ -40,13 +37,27 @@ public class Album {
         this.tracks = tracks;
     }
 
-    public Album(String title, Artist artist, List<Track> tracks, AlbumFormat format, MusicGenre genre) {
+    public Album(String title, Artist artist, List<Track> tracks, String format, String genre) {
         this.title = title;
         this.artist = artist;
         this.tracks = tracks;
         this.format = format;
         this.genre = genre;
     }
+    public Album(String title, Artist artist, String format, String genre) {
+        this.title = title;
+        this.artist = artist;
+        this.format = format;
+        this.genre = genre;
+    }
+    public Album(Long id, String title, Artist artist, String format, String genre) {
+        this.id = id;
+        this.title = title;
+        this.artist = artist;
+        this.format = format;
+        this.genre = genre;
+    }
+
 
     public Album(Long id, String title, List<Track> tracks) {
         this.id = id;
@@ -82,29 +93,22 @@ public class Album {
         this.tracks = tracks;
     }
 
-    public AlbumFormat getFormat() {
+    public String getFormat() {
         return format;
     }
 
-    public void setFormat(AlbumFormat format) {
+    public void setFormat(String format) {
         this.format = format;
     }
 
-    public MusicGenre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(MusicGenre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
-    public List<Track> getSongs() {
-        return tracks;
-    }
-
-    public void setSongs(List<Track> tracks) {
-        this.tracks = tracks;
-    }
 
     public String getTitle() {
         return title;

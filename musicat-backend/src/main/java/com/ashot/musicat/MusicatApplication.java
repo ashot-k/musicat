@@ -16,8 +16,8 @@ import java.util.List;
 @SpringBootApplication
 public class MusicatApplication{
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(MusicGenre.values()));
-        System.out.println(Arrays.toString(AlbumFormat.values()));
+        System.out.println(MusicGenre.genres);
+        System.out.println(AlbumFormat.formats);
         SpringApplication.run(MusicatApplication.class, args);
     }
 

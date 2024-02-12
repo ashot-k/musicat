@@ -10,5 +10,7 @@ import java.util.List;
 
 public interface AlbumRepository extends JpaRepository<Album, Long> {
     @Query("SELECT A.tracks FROM Album A WHERE A.id = :id")
-   List<Track> findAlbumTracks(Long id);
+    List<Track> findAlbumTracks(Long id);
+
+    List<Album> findByArtistId(Long id);
 }

@@ -1,5 +1,6 @@
 package com.ashot.musicat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,10 @@ public class Track {
     private Long id;
     private String title;
     private int duration;
+
+    @ManyToOne
+    @JsonIgnore
+    private Album album;
 
 
     public Track() {
@@ -42,5 +47,13 @@ public class Track {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 }

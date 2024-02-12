@@ -2,47 +2,79 @@ package com.ashot.musicat.service;
 
 import com.ashot.musicat.dto.AlbumDTO;
 import com.ashot.musicat.entity.Album;
+import com.ashot.musicat.entity.Artist;
 import com.ashot.musicat.entity.Track;
 import com.ashot.musicat.repo.AlbumRepository;
+import com.ashot.musicat.repo.ArtistRepository;
 import com.ashot.musicat.utils.ExceptionMessages;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-@Service
-public class AlbumServiceImpl implements AlbumService{
-    private final AlbumRepository albumRepo;
-    private final EntityManager em;
+import java.util.Optional;
 
-    public AlbumServiceImpl(AlbumRepository albumRepo, EntityManager em) {
+@Service
+public class AlbumServiceImpl implements AlbumService {
+    private final AlbumRepository albumRepo;
+    private final ArtistRepository artistRepo;
+    public AlbumServiceImpl(AlbumRepository albumRepo, ArtistRepository artistRepo) {
         this.albumRepo = albumRepo;
-        this.em = em;
+        this.artistRepo = artistRepo;
     }
 
     @Override
     public AlbumDTO getById(Long id) {
-        Album album = albumRepo.findById(id).orElseThrow(()-> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id)));
-        return  albumToAlbumDTO(album);
-    }
-    @Override
-    public List<AlbumDTO> getAll(){
-        List<Album> albums = albumRepo.findAll();
-        List<AlbumDTO> albumDTOS = new ArrayList<>();
-        albums.forEach(album -> {
-            albumDTOS.add(new AlbumDTO(album.getId(), album.getTitle(), album.getArtist().getId(), album.getGenre(), album.getFormat()));
-        });
-        return albumDTOS;
+        Album album = albumRepo.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id))
+        );
+        return albumToAlbumDTO(album);
     }
 
-    private AlbumDTO albumToAlbumDTO(Album album){
+    @Override
+    public Page<AlbumDTO> getAll(int pageNo, int pageSize) {
+        return albumRepo.findAll(PageRequest.of(pageNo, pageSize))
+                .map(this::albumToAlbumDTO);
+    }
+
+    public AlbumDTO albumToAlbumDTO(Album album) {
         return new AlbumDTO(album.getId(), album.getTitle(), album.getArtist().getId(), album.getGenre(), album.getFormat());
     }
-    @Override
-    public Album save(Album album) {
-        return albumRepo.save(album);
+
+    public Album albumDTOtoAlbum(AlbumDTO albumDTO) {
+        Optional<Album> existingAlbum = Optional.empty();
+        if (albumDTO.id() != null)
+            existingAlbum = albumRepo.findById(albumDTO.id());
+        if (existingAlbum.isPresent()) {
+            return existingAlbum.get();
+        } else {
+            Album newAlbum = new Album();
+            Optional<Artist> artist = artistRepo.findById(albumDTO.artist());
+            if(artist.isEmpty())
+                throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Artist.class.getSimpleName(), albumDTO.artist()));
+            newAlbum.setArtist(artist.get());
+
+            newAlbum.setTitle(albumDTO.title());
+            newAlbum.setFormat(albumDTO.format());
+            newAlbum.setGenre(albumDTO.genre());
+            return newAlbum;
+        }
     }
+
+    @Override
+    public AlbumDTO save(AlbumDTO albumDTO) {
+        Album album = albumRepo.save(albumDTOtoAlbum(albumDTO));
+        album.getArtist().getAlbums().add(album);
+        artistRepo.save(album.getArtist());
+        return albumToAlbumDTO(album);
+    }
+
+    @Override
+    public AlbumDTO update(AlbumDTO albumDTO) {
+        return null;
+    }
+
     @Override
     public void delete(Long id) {
         albumRepo.deleteById(id);
@@ -52,6 +84,4 @@ public class AlbumServiceImpl implements AlbumService{
     public List<Track> getAlbumTracks(Long id) {
         return albumRepo.findAlbumTracks(id);
     }
-
-
 }

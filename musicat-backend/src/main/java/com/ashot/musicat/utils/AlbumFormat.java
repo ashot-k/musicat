@@ -1,18 +1,11 @@
 package com.ashot.musicat.utils;
 
-public enum AlbumFormat {
-    CD("CD"),
-    VINYL("Vinyl"),
-    CASSETTE("Cassette"),
-    DIGITAL("Digital");
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    private final String format;
+public class AlbumFormat {
 
-    AlbumFormat(String format) {
-        this.format = format;
-    }
+    public static List<String> formats = new ArrayList<>(Arrays.asList("CD", "Vinyl", "Cassette", "Digital"));
 
-    public String getFormat() {
-        return format;
-    }
 }

@@ -1,34 +1,17 @@
 package com.ashot.musicat.utils;
 
-public enum MusicGenre {
-    ROCK("Rock"),
-    POP("Pop"),
-    RAP("Rap"),
-    COUNTRY("Country"),
-    JAZZ("Jazz"),
-    BLUES("Blues"),
-    CLASSICAL("Classical"),
-    ELECTRONIC("Electronic"),
-    HIP_HOP("Hip Hop"),
-    R_AND_B("R&B"),
-    REGGAE("Reggae"),
-    METAL("Metal"),
-    FUNK("Funk"),
-    SOUL("Soul"),
-    INDIE("Indie"),
-    PUNK("Punk"),
-    ALTERNATIVE("Alternative"),
-    FOLK("Folk"),
-    EDM("EDM"),  // Electronic Dance Music
-    COUNTRY_ROCK("Country Rock");
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    private final String genre;
+public class MusicGenre {
+    public static List<String> genres = new ArrayList<>(Arrays.asList(
+            "ROCK", "POP", "RAP",
+            "COUNTRY", "JAZZ", "BLUES",
+            "CLASSICAL", "ELECTRONIC", "HIP_HOP",
+            "R_AND_B", "REGGAE", "METAL",
+            "FUNK", "SOUL", "INDIE",
+            "PUNK", "ALTERNATIVE",
+            "FOLK", "EDM", "COUNTRY_ROCK"));
 
-    MusicGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
 }

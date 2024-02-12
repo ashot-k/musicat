@@ -2,6 +2,9 @@ package com.ashot.musicat.controller;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +22,7 @@ public class MusicatControllerAdvice {
         return e.getMessage();
     }
 
+
     @ExceptionHandler
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
@@ -31,4 +35,10 @@ public class MusicatControllerAdvice {
         });
         return errors;
     }
+    @ExceptionHandler
+    public String handleValidationExceptions(
+            ValidationException ex) {
+        return ex.getMessage();
+    }
+
 }

@@ -12,11 +12,6 @@ public class Track {
     private String title;
     private int duration;
 
-    @ManyToOne
-    @JsonIgnore
-    private Album album;
-
-
     public Track() {
     }
 
@@ -49,11 +44,4 @@ public class Track {
         this.id = id;
     }
 
-    public Album getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(Album album) {
-        this.album = album;
-    }
 }

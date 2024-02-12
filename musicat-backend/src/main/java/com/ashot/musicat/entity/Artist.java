@@ -13,10 +13,7 @@ public class Artist {
     private String name;
     @Column(length = 25000)
     private String description;
-    @Column
     private String members;
-
-
 
     public Long getId() {
         return id;

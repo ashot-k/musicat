@@ -1,7 +1,7 @@
 package com.ashot.musicat.repo;
 
-import com.ashot.musicat.entity.Song;
+import com.ashot.musicat.entity.Track;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SongRepository extends JpaRepository<Song, Long> {
+public interface SongRepository extends JpaRepository<Track, Long> {
 }

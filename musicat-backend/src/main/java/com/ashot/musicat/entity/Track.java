@@ -3,22 +3,19 @@ package com.ashot.musicat.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class Song {
+public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    @Column(name = "title")
     private String title;
-
-    @Column(name = "duration")
     private int duration;
 
-    public Song() {
+
+    public Track() {
     }
 
-    public Song(String title, int duration) {
+    public Track(String title, int duration) {
         this.title = title;
         this.duration = duration;
     }

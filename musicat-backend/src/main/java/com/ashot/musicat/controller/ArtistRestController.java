@@ -5,6 +5,7 @@ import com.ashot.musicat.entity.Album;
 import com.ashot.musicat.entity.Artist;
 import com.ashot.musicat.service.AlbumService;
 import com.ashot.musicat.service.ArtistService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,8 +51,8 @@ public class ArtistRestController {
         return new ResponseEntity<>(artistService.save(artist), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Artist> updateArtist(@RequestBody Artist artist) {
-        return new ResponseEntity<>(artistService.update(artist), HttpStatus.CREATED);
+    public ResponseEntity<Artist> updateArtist(@RequestBody Artist artist, @PathVariable Long id) {
+        return new ResponseEntity<>(artistService.update(artist, id), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

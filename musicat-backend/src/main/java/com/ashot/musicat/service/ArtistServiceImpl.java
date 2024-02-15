@@ -6,6 +6,7 @@ import com.ashot.musicat.repo.AlbumRepository;
 import com.ashot.musicat.repo.ArtistRepository;
 import com.ashot.musicat.utils.ExceptionMessages;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +17,6 @@ import java.util.Optional;
 
 @Service
 public class ArtistServiceImpl implements ArtistService {
-
 
     private final ArtistRepository artistRepo;
     private final AlbumRepository albumRepository;
@@ -39,7 +39,6 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public List<Album> getAllAlbums(Long id) {
-
         return albumRepository.findByArtistId(id);
     }
 
@@ -49,14 +48,14 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public Artist update(Artist updatedArtist) {
-
-        if (updatedArtist.getId() == null) {
+    public Artist update(Artist updatedArtist, Long id) {
+        if (id == null) {
             throw new ValidationException("Enter artist id");
         }
-        Optional<Artist> artistOptional = artistRepo.findById(updatedArtist.getId());
+
+        Optional<Artist> artistOptional = artistRepo.findById(id);
         if (artistOptional.isEmpty())
-            throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Artist.class.getSimpleName(), updatedArtist.getId()));
+            throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Artist.class.getSimpleName(), id));
         Artist artist = artistOptional.get();
 
         updatedArtist.setAlbums(artist.getAlbums());
@@ -66,6 +65,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         artistRepo.deleteById(id);
     }

@@ -6,6 +6,7 @@ import com.ashot.musicat.entity.Artist;
 import com.ashot.musicat.entity.Track;
 import com.ashot.musicat.repo.AlbumRepository;
 import com.ashot.musicat.repo.ArtistRepository;
+import com.ashot.musicat.repo.TrackRepository;
 import com.ashot.musicat.utils.ExceptionMessages;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,12 @@ import java.util.Optional;
 public class AlbumServiceImpl implements AlbumService {
     private final AlbumRepository albumRepo;
     private final ArtistRepository artistRepo;
-    public AlbumServiceImpl(AlbumRepository albumRepo, ArtistRepository artistRepo) {
+    private final TrackRepository trackRepo;
+
+    public AlbumServiceImpl(AlbumRepository albumRepo, ArtistRepository artistRepo, TrackRepository trackRepo) {
         this.albumRepo = albumRepo;
         this.artistRepo = artistRepo;
+        this.trackRepo = trackRepo;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class AlbumServiceImpl implements AlbumService {
         } else {
             Album newAlbum = new Album();
             Optional<Artist> artist = artistRepo.findById(albumDTO.artist());
-            if(artist.isEmpty())
+            if (artist.isEmpty())
                 throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Artist.class.getSimpleName(), albumDTO.artist()));
             newAlbum.setArtist(artist.get());
 
@@ -83,5 +87,12 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public List<Track> getAlbumTracks(Long id) {
         return albumRepo.findAlbumTracks(id);
+    }
+
+    @Override
+    public void deleteTrackById(Long albumId, Long trackId) {
+        Album album = albumRepo.findById(albumId).orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), albumId)));
+        album.getTracks().removeIf(track -> track.getId().equals(trackId));
+        albumRepo.save(album);
     }
 }

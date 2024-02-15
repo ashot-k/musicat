@@ -21,15 +21,10 @@ public class Album {
     @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Track> tracks;
     private String format;
     private String genre;
-
-    public Album(String title, List<Track> tracks) {
-        this.title = title;
-        this.tracks = tracks;
-    }
 
     public Album(String title, Artist artist, List<Track> tracks) {
         this.title = title;
@@ -58,12 +53,6 @@ public class Album {
         this.genre = genre;
     }
 
-
-    public Album(Long id, String title, List<Track> tracks) {
-        this.id = id;
-        this.title = title;
-        this.tracks = tracks;
-    }
 
     public Album(Long id, String title) {
         this.id = id;
@@ -113,7 +102,6 @@ public class Album {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }

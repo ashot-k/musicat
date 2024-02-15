@@ -2,6 +2,7 @@ package com.ashot.musicat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Track {
@@ -9,7 +10,13 @@ public class Track {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+
+
+    @NotBlank
+    @NotNull
     private String title;
+
+    @Min(value = 0, message = "Value must be a positive integer.")
     private int duration;
 
     public Track() {

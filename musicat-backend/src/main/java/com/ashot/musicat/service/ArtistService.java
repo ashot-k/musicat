@@ -11,8 +11,6 @@ public interface ArtistService {
     Page<Artist> getAll(int pageNo, int pageSize);
     List<Album> getAllAlbums(Long id);
     Artist save(Artist artist);
-    Artist update(Artist artist);
+    Artist update(Artist artist, Long id);
     void delete(Long id);
-
-
 }

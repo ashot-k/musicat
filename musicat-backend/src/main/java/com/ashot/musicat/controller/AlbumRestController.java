@@ -50,5 +50,11 @@ public class AlbumRestController {
         return new ResponseEntity<>(albumService.getAlbumTracks(id), HttpStatus.OK);
     }
 
+    @DeleteMapping("{id}/tracks/{trackId}")
+    public ResponseEntity<String> deleteTrackById(@PathVariable Long id, @PathVariable Long trackId){
+        albumService.deleteTrackById(id, trackId);
+        return new ResponseEntity<>("Deleted track with id: " + trackId + " from album with id: " + id, HttpStatus.OK);
+    }
+
 
 }

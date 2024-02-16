@@ -7,10 +7,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record AlbumDTO(Long id,
-                       @NotNull(message = "Enter a title") String title,
-                       @NotNull(message = "Enter a valid artist id") Long artist,
-                       @NotNull(message = "Enter a genre") @NotBlank(message = "Enter a genre") String genre,
-                       @NotNull(message = "Enter a format") @NotBlank(message = "Enter a format") String format) {
+                       @NotNull(message = "Enter a title")
+                       String title,
+                       @NotNull(message = "Enter a valid artist id")
+                       Long artist,
+                       @NotNull(message = "Enter a genre")
+                       @NotBlank(message = "Enter a genre")
+                       String genre,
+                       @NotNull(message = "Enter a format")
+                       @NotBlank(message = "Enter a format")
+                       String format) {
     public AlbumDTO {
         boolean flag = false;
         if (format != null) {

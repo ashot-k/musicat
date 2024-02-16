@@ -39,22 +39,26 @@ public class AlbumRestController {
         return new ResponseEntity<>(albumService.save(album), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         albumService.delete(id);
         return new ResponseEntity<>("Deleted album with id: " + id, HttpStatus.OK);
     }
 
-    @GetMapping("{id}/tracks")
+    @GetMapping("/{id}/tracks")
     public ResponseEntity<List<Track>> getAlbumTracks(@PathVariable Long id){
         return new ResponseEntity<>(albumService.getAlbumTracks(id), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}/tracks/{trackId}")
+    @DeleteMapping("/{id}/tracks/{trackId}")
     public ResponseEntity<String> deleteTrackById(@PathVariable Long id, @PathVariable Long trackId){
         albumService.deleteTrackById(id, trackId);
         return new ResponseEntity<>("Deleted track with id: " + trackId + " from album with id: " + id, HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/tracks")
+    public ResponseEntity<Track> addTrack(@PathVariable Long id, @RequestBody Track track){
+        return new ResponseEntity<>(albumService.addTrack(id, track), HttpStatus.CREATED);
+    }
 
 }

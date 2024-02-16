@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
+
     private final AlbumRepository albumRepo;
     private final ArtistRepository artistRepo;
     private final TrackRepository trackRepo;
@@ -90,8 +91,18 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public Track addTrack(Long albumId, Track track) {
+        Album album = albumRepo.findById(albumId)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), albumId)));
+        album.getTracks().add(track);
+        albumRepo.save(album);
+        return track;
+    }
+
+    @Override
     public void deleteTrackById(Long albumId, Long trackId) {
-        Album album = albumRepo.findById(albumId).orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), albumId)));
+        Album album = albumRepo.findById(albumId)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), albumId)));
         album.getTracks().removeIf(track -> track.getId().equals(trackId));
         albumRepo.save(album);
     }

@@ -44,50 +44,56 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     public AlbumDTO albumToAlbumDTO(Album album) {
-        return new AlbumDTO(album.getId(), album.getTitle(), album.getArtist().getId(), album.getGenre(), album.getFormat());
+        return new AlbumDTO(album.getId(), album.getTitle(), album.getArtist().getId(),album.getArtist().getName(), album.getGenre(), album.getFormat());
     }
 
     public Album albumDTOtoAlbum(AlbumDTO albumDTO) {
-        Optional<Album> existingAlbum = Optional.empty();
-        if (albumDTO.id() != null)
-            existingAlbum = albumRepo.findById(albumDTO.id());
-        if (existingAlbum.isPresent()) {
-            return existingAlbum.get();
-        } else {
-            Album newAlbum = new Album();
+            Album album = new Album();
             Optional<Artist> artist = artistRepo.findById(albumDTO.artist());
             if (artist.isEmpty())
                 throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Artist.class.getSimpleName(), albumDTO.artist()));
-            newAlbum.setArtist(artist.get());
-
-            newAlbum.setTitle(albumDTO.title());
-            newAlbum.setFormat(albumDTO.format());
-            newAlbum.setGenre(albumDTO.genre());
-            return newAlbum;
-        }
+            album.setArtist(artist.get());
+            album.setTitle(albumDTO.title());
+            album.setFormat(albumDTO.format());
+            album.setGenre(albumDTO.genre());
+            return album;
     }
 
     @Override
     public AlbumDTO save(AlbumDTO albumDTO) {
-        Album album = albumRepo.save(albumDTOtoAlbum(albumDTO));
-        album.getArtist().getAlbums().add(album);
-        artistRepo.save(album.getArtist());
-        return albumToAlbumDTO(album);
+        Album album = albumDTOtoAlbum(albumDTO);
+        return albumToAlbumDTO(albumRepo.save(album));
     }
 
     @Override
-    public AlbumDTO update(AlbumDTO albumDTO) {
-        return null;
+    public AlbumDTO update(AlbumDTO albumDTO, Long id) {
+        Optional<Album> albumOptional = albumRepo.findById(id);
+        if(albumOptional.isEmpty()){
+            throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id));
+        }
+        Album album = albumOptional.get();
+        Album updatedAlbum = albumDTOtoAlbum(albumDTO);
+        updatedAlbum.setId(id);
+        updatedAlbum.setTracks(album.getTracks());
+        album = updatedAlbum;
+
+        return albumToAlbumDTO(albumRepo.save(album));
     }
 
     @Override
     public void delete(Long id) {
-        albumRepo.deleteById(id);
+        Album album = albumRepo.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id)));
+        if (album != null) {
+            albumRepo.delete(album);
+        }
     }
 
     @Override
     public List<Track> getAlbumTracks(Long id) {
-        return albumRepo.findAlbumTracks(id);
+        Album album = albumRepo.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id)));
+        return album.getTracks();
     }
 
     @Override

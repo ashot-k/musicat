@@ -6,45 +6,21 @@ import {useEffect, useState} from "react";
 import {getAlbums, getArtist} from "./MusicatAPI";
 
 function App() {
-   // setAlbums(albums.data.content)
     const [albums, setAlbums] = useState(null);
+
     useEffect(() => {
-        getAlbums().then((albumsResponse) => {
-            const albumPromises = albumsResponse.data.content.map((albumKey) => {
-                return getArtist(albumKey.artist).then((response) => {
-                    albumKey.artistName = response.data.name;
-                    return albumKey;
-                });
-            });
-
-            Promise.all(albumPromises)
-                .then((updatedAlbums) => {
-                    setAlbums(updatedAlbums);
-                })
-                .catch((error) => {
-                    console.error('Error updating albums:', error);
-                });
-        });
+        getAlbums().then((response) => setAlbums(response.data.content));
     }, []);
-   /* useEffect(() => {
-        getAlbums().then((albums) => {
-            for (const albumsKey of albums.data.content) {
-                getArtist(albumsKey.artist).then((response) => {
-                    albumsKey.artistName = response.data.name;
-                    setAlbums(albums.data.content);
-                    console.log("called");
-                });
-            }
-        });
 
-
-    }, []);*/
-    function setArtistNames(){
-
-    }
     return (
-        <div className="App">
-            {albums && <AlbumList albums={albums}/>}
+        <div className="App d-flex flex-column align-items-center justify-content-center">
+            <div className={"nav-bar"}>
+
+            </div>
+            <div className={"content"}>
+                <h1 className={"h1"}>Albums</h1>
+                {albums && <AlbumList albums={albums}/>}
+            </div>
         </div>
     );
 

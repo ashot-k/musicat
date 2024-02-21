@@ -52,20 +52,16 @@ public class ArtistServiceImpl implements ArtistService {
         if (id == null) {
             throw new ValidationException("Enter artist id");
         }
-
         Optional<Artist> artistOptional = artistRepo.findById(id);
         if (artistOptional.isEmpty())
             throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Artist.class.getSimpleName(), id));
         Artist artist = artistOptional.get();
-
         updatedArtist.setAlbums(artist.getAlbums());
         updatedArtist.setId(artist.getId());
-
         return artistRepo.save(updatedArtist);
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         artistRepo.deleteById(id);
     }

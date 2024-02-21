@@ -11,6 +11,7 @@ public record AlbumDTO(Long id,
                        String title,
                        @NotNull(message = "Enter a valid artist id")
                        Long artist,
+                       String artistName,
                        @NotNull(message = "Enter a genre")
                        @NotBlank(message = "Enter a genre")
                        String genre,

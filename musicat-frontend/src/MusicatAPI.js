@@ -12,5 +12,4 @@ function getArtist(id) {
     return axios.get(artistURL + "/" + id).catch((error)=> console.log(error));
 }
 
-
 export {getAlbums, getArtist, getTracks};

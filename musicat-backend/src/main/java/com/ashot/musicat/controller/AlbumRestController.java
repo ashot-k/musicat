@@ -41,6 +41,11 @@ public class AlbumRestController {
         return new ResponseEntity<>(albumService.save(album), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<AlbumDTO> updateAlbum(@Valid @RequestBody AlbumDTO albumDTO, @PathVariable Long id){
+        return new ResponseEntity<>(albumService.update(albumDTO, id), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         albumService.delete(id);

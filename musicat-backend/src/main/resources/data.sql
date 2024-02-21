@@ -15,19 +15,6 @@ insert into album (id, title, artist_id, format, genre) values (8, 'Zoledronic a
 insert into album (id, title, artist_id, format, genre) values (9, 'Sisal', 2, 'CASSETTE', 'ROCK');
 insert into album (id, title, artist_id, format, genre) values (10, 'Kroger Value Aspirin', 5, 'CD', 'RAP');
 
-insert into artist_albums (albums_id, artist_id) values (1, 1);
-insert into artist_albums (albums_id, artist_id) values (2, 1);
-insert into artist_albums (albums_id, artist_id) values (3, 1);
-insert into artist_albums (albums_id, artist_id) values (4, 2);
-insert into artist_albums (albums_id, artist_id) values (5, 3);
-insert into artist_albums (albums_id, artist_id) values (6, 5);
-insert into artist_albums (albums_id, artist_id) values (7, 4);
-insert into artist_albums (albums_id, artist_id) values (8, 3);
-insert into artist_albums (albums_id, artist_id) values (9, 2);
-insert into artist_albums (albums_id, artist_id) values (10, 5);
-
-
-
 insert into track (id, title, duration) values (1, 'eshovell0', 737);
 insert into track (id, title, duration) values (2, 'mlentsch1', 68);
 insert into track (id, title, duration) values (3, 'ctester2', 431);

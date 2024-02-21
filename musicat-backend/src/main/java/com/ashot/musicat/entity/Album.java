@@ -21,7 +21,7 @@ public class Album {
     @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Track> tracks;
     private String format;
     private String genre;

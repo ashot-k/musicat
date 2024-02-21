@@ -24,8 +24,10 @@ import java.util.Map;
 public class MusicatControllerAdvice {
 
     @ExceptionHandler
-    public String entityNotFoundHandler(EntityNotFoundException e) {
-        return e.getMessage();
+    public Map<String, String> entityNotFoundHandler(EntityNotFoundException e) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", e.getMessage());
+       return errors;
     }
 
 

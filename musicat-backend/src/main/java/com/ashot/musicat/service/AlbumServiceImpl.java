@@ -31,9 +31,8 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public AlbumDTO getById(Long id) {
-        Album album = albumRepo.findById(id).orElseThrow(() ->
-                new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id))
-        );
+        Album album = albumRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id)));
         return albumToAlbumDTO(album);
     }
 
@@ -44,19 +43,19 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     public AlbumDTO albumToAlbumDTO(Album album) {
-        return new AlbumDTO(album.getId(), album.getTitle(), album.getArtist().getId(),album.getArtist().getName(), album.getGenre(), album.getFormat());
+        return new AlbumDTO(album.getId(), album.getTitle(), album.getArtist().getId(), album.getArtist().getName(), album.getGenre(), album.getFormat());
     }
 
     public Album albumDTOtoAlbum(AlbumDTO albumDTO) {
-            Album album = new Album();
-            Optional<Artist> artist = artistRepo.findById(albumDTO.artist());
-            if (artist.isEmpty())
-                throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Artist.class.getSimpleName(), albumDTO.artist()));
-            album.setArtist(artist.get());
-            album.setTitle(albumDTO.title());
-            album.setFormat(albumDTO.format());
-            album.setGenre(albumDTO.genre());
-            return album;
+        Album album = new Album();
+        Optional<Artist> artist = artistRepo.findById(albumDTO.artist());
+        if (artist.isEmpty())
+            throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Artist.class.getSimpleName(), albumDTO.artist()));
+        album.setArtist(artist.get());
+        album.setTitle(albumDTO.title());
+        album.setFormat(albumDTO.format());
+        album.setGenre(albumDTO.genre());
+        return album;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public AlbumDTO update(AlbumDTO albumDTO, Long id) {
         Optional<Album> albumOptional = albumRepo.findById(id);
-        if(albumOptional.isEmpty()){
+        if (albumOptional.isEmpty()) {
             throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id));
         }
         Album album = albumOptional.get();

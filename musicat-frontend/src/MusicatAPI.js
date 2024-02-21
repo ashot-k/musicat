@@ -1,8 +1,13 @@
 import axios from "axios";
 import {albumsURL, artistURL, musicatURL, tracksURL} from "./URLs";
+import {ErrorPage} from "./components/ErrorPage";
 
 function getAlbums() {
     return axios.get(albumsURL).catch((error) => console.log(error));
+}
+
+function getAlbum(id) {
+    return axios.get(albumsURL + "/" + id).catch((error) =>  console.log());
 }
 
 function getTracks(id) {
@@ -12,4 +17,4 @@ function getArtist(id) {
     return axios.get(artistURL + "/" + id).catch((error)=> console.log(error));
 }
 
-export {getAlbums, getArtist, getTracks};
+export {getAlbums, getAlbum, getArtist, getTracks};

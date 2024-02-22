@@ -1,0 +1,26 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  background-color: transparent;
+  width: fit-content;
+  min-width: 300px;
+}
+
+th {
+  background-image: linear-gradient(to bottom, #101010, transparent);
+}
+
+.track:hover {
+
+  background-color: #505050;
+  border-bottom: #505050 solid 0.5px;
+}
+
+.track {
+  border-bottom: #101010 solid 0.5px;
+}
+
+td, th {
+  padding: 10px 10px 10px 25px;
+  text-align: left;
+}

@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getAlbum, getTracks} from "../MusicatAPI";
 
@@ -6,9 +6,15 @@ export const AlbumPage = () => {
     const params = useParams();
     const [albumInfo, setAlbumInfo] = useState(null);
     const [albumTracks, setAlbumTracks] = useState(null);
+    const [isPending, setIsPending] = useState(true);
+
     useEffect(() => {
-        getAlbum(params.albumId).then((response) => setAlbumInfo(response.data));
-        getTracks(params.albumId).then((response) => setAlbumTracks(response.data))
+        getAlbum(params.albumId)
+            .then((response) => setAlbumInfo(response.data))
+            .catch((error) => console.log(error)).then(() => setIsPending(false));
+        getTracks(params.albumId)
+            .then((response) => setAlbumTracks(response.data))
+            .catch((error) => console.log(error));
     }, []);
 
     function secondsToMinutes(seconds) {
@@ -20,26 +26,28 @@ export const AlbumPage = () => {
             minutes = minutes + ":" + remaining;
         return minutes;
     }
+
     function capitalizeFirst(str) {
-       let newStr = str.substring(0,1).toUpperCase();
-      return  newStr = newStr + str.substring(1).toLowerCase();
+        let newStr = str.substring(0, 1).toUpperCase();
+        return newStr = newStr + str.substring(1).toLowerCase();
     }
 
     return (
-        <div className={"p-4"}>
+        <div className={"content rounded-4 d-flex flex-column  justify-content-center"}>
             {albumInfo && !albumInfo.error &&
-                <div className={"d-flex flex-column gap-3 justify-content-center align-items-start"}>
-                    <h1 className={"h1"}>{albumInfo.title}</h1>
-                    <hr className={"w-100"}/>
+                <div className={"w-100 d-flex flex-column gap-4 align-items-start"}>
+                    <img src={""} alt={"Image not available"}></img>
+                    <h1 className={"h1 content-title"}>{albumInfo.title}</h1>
                     <div>
-                        <h4 className={"h4"}>Artist: {albumInfo.artistName}</h4>
+                        <h4 className={"h4"}>Artist: <Link
+                            to={"/artist/" + albumInfo.artist}>{albumInfo.artistName}</Link></h4>
                         <h4 className={"h4"}>Genre: {capitalizeFirst(albumInfo.genre)}</h4>
                         <h4 className={"h4"}>Format: {capitalizeFirst(albumInfo.format)}</h4>
                     </div>
-                    <div className={"w-75"}>
-                        <h3 className={"h3"}>Tracks</h3>
-                        <table className={"table table-dark"}>
-                            <thead className={"table-secondary"}>
+                    <div>
+                        <br/>
+                        <table className={"rounded-4 shadow-lg"}>
+                            <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
@@ -49,7 +57,7 @@ export const AlbumPage = () => {
                             <tbody>
                             {albumTracks
                                 && albumTracks.map((track, idx) => {
-                                    return <tr>
+                                    return <tr className={"track"}>
                                         <td>{idx + 1}</td>
                                         <td>{track.title}</td>
                                         <td>{secondsToMinutes(track.duration)}</td>
@@ -58,10 +66,11 @@ export const AlbumPage = () => {
                             </tbody>
                         </table>
                     </div>
-                </div> ||
-
+                </div>
+                ||
+                !isPending &&
                 <div>
-                    <h1 className={"h1"}>Album does not exist</h1>
+                    <h1 className={"h1"}>Could not load album info</h1>
                 </div>
             }
         </div>

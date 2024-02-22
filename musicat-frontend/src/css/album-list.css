@@ -1,15 +1,3 @@
-.album-image {
-  width: 100%;
-  max-height: 145px;
-}
 
-.album {
-  background-color: black;
-  transition: 0.3s;
-}
-
-.album:hover {
-  background-color: gray;
-}
 
 /*# sourceMappingURL=album-list.css.map */

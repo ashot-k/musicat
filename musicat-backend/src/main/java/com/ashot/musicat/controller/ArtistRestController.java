@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/artist")
-@CrossOrigin(origins = {"http://localhost:3000", "http://192.168.1.64:3000"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://192.168.1.64:3000",  "http://192.168.1.80:3000"})
 public class ArtistRestController {
     private final ArtistService artistService;
     private final AlbumService albumService;

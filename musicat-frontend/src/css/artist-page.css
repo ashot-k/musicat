@@ -1,0 +1,21 @@
+.artist-info {
+  align-items: start;
+}
+
+@media screen and (min-width: 800px) {
+  .artist-page-img {
+    width: 248px;
+    height: 248px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .artist-page-img {
+    width: 80%;
+    height: 80%;
+  }
+  .artist-page-img-container {
+    justify-content: center;
+  }
+}
+
+/*# sourceMappingURL=artist-page.css.map */

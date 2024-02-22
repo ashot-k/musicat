@@ -7,7 +7,7 @@ function getAlbums() {
 }
 
 function getAlbum(id) {
-    return axios.get(albumsURL + "/" + id).catch((error) =>  console.log());
+    return axios.get(albumsURL + "/" + id).catch((error) =>  console.log(error));
 }
 
 function getTracks(id) {
@@ -16,5 +16,11 @@ function getTracks(id) {
 function getArtist(id) {
     return axios.get(artistURL + "/" + id).catch((error)=> console.log(error));
 }
+function getArtists() {
+    return axios.get(artistURL).catch((error)=> console.log(error));
+}
+function getArtistAlbums(id){
+    return axios.get(artistURL + "/" + id + "/albums").catch((error)=> console.log(error));
+}
 
-export {getAlbums, getAlbum, getArtist, getTracks};
+export {getAlbums, getAlbum, getArtist, getArtists, getArtistAlbums, getTracks};

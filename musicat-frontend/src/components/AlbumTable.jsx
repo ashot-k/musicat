@@ -1,11 +1,9 @@
 import {useEffect, useState} from "react";
 import "../css/admin-list.css"
-import {getArtist, getTracks} from "../MusicatAPI";
 function AlbumTable({albums}) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const headers = (albums && albums.length > 0) ? Object.keys(albums[0]) : [];
-
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">

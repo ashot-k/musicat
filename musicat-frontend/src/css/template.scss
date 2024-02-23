@@ -7,13 +7,13 @@ body {
   background-color: #121212;
 }
 
-$transition-color: #ff5b5b;
+$transition-color: #c02943;
 
 .content {
   width: 100%;
   height: 100%;
   box-shadow: 5px 5px 2px #121212;
-  background-image: linear-gradient(to bottom, #771220, #121212);
+  background-image: linear-gradient(to bottom, #6c1b27, #121212);
 }
 
 @media screen and (min-width: 800px) {
@@ -23,7 +23,7 @@ $transition-color: #ff5b5b;
     gap: 15px;
   }
   .content {
-    padding: 5% 5%;
+    padding: 3% 5%;
   }
 }
 
@@ -63,7 +63,6 @@ $transition-color: #ff5b5b;
 .additional-info {
   font-size: 0.75rem;
 }
-
 
 a:hover {
   color: $transition-color;

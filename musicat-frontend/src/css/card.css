@@ -1,15 +1,13 @@
 @media screen and (min-width: 800px) {
   .card {
-    padding: 20px;
-    width: 18%;
+    padding: 8px;
+    width: 16%;
   }
 }
 @media screen and (max-width: 600px) {
   .card {
+    padding: 8px;
     width: 45%;
-  }
-  .card img {
-    padding: 15px;
   }
 }
 .card-image {
@@ -34,11 +32,15 @@
 }
 
 .card-body {
-  padding: 10px;
+  padding: 8px 0;
 }
 
 .card-body a {
   color: white;
+}
+
+.buy-btn {
+  width: 40%;
 }
 
 .card:hover img {
@@ -51,10 +53,10 @@ img {
 }
 
 .card-title, h5 {
-  width: inherit;
+  width: 98%;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: clip;
   text-overflow: ellipsis;
 }
 
-/*# sourceMappingURL=album-card.css.map */
+/*# sourceMappingURL=card.css.map */

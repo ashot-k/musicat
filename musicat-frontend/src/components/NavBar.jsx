@@ -14,7 +14,7 @@ export const NavBar = () => {
                 <div className={"btn btn-outline-light"}>
                     <NavLink className={"h3 text-decoration-none"} to={"/"}>Login</NavLink>
                 </div>
-                <div className={"btn btn-outline-light "}>
+                <div className={"btn btn-outline-light"}>
                     <NavLink className={"h3 text-decoration-none "} to={"/"}>Register</NavLink>
                 </div>
             </div>

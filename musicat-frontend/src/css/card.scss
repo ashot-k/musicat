@@ -1,7 +1,7 @@
 @media screen and (min-width: 800px) {
-  $card-width: 18%;
+  $card-width: 16%;
   .card {
-    padding: 20px;
+    padding: 8px;
     width: $card-width;
   }
 }
@@ -9,10 +9,8 @@
 @media screen and (max-width: 600px) {
   $card-width: 45%;
   .card {
+    padding: 8px;
     width: $card-width;
-  }
-  .card img{
-    padding: 15px;
   }
 }
 
@@ -33,16 +31,18 @@
   background-color: #121212;
 }
 .card:hover {
-  // background-color: #2d2d2d;
   background-color: #202020;
  }
 .card-body{
-  padding: 10px;
+  padding: 8px 0;
 }
 .card-body a {
   color: white;
 }
 
+.buy-btn{
+  width: 40%;
+}
 .card:hover img {
   transition: 0.3s;
   opacity: 0.5;
@@ -53,8 +53,8 @@ img {
 }
 
 .card-title, h5 {
-  width: inherit;
+  width: 98%;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: clip;
   text-overflow: ellipsis;
 }

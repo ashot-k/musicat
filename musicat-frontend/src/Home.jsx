@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/template.css'
 import './css/nav-bar.css';
 import './css/album-list.css'
-import './css/album-card.scss'
+import './css/card.scss'
 import {useEffect, useState} from "react";
 import {getAlbums, getArtist, getArtists} from "./MusicatAPI";
 import {AlbumList} from "./components/AlbumList";
@@ -23,14 +23,15 @@ function Home() {
 
     return (
         <div className="content rounded-4 d-flex flex-column gap-5 align-items-center justify-content-center">
-            {albums && <AlbumList albums={albums}/>
-                || !isPending && !albums &&
-                <h1 className={"display-3"}>Could not load Page</h1>
-            }
             {artists && <ArtistList artists={artists}/>
                 || !isPending && !artists &&
                 <h1 className={"display-3"}>Could not load Page</h1>
             }
+            {albums && <AlbumList albums={albums}/>
+                || !isPending && !albums &&
+                <h1 className={"display-3"}>Could not load Page</h1>
+            }
+
         </div>
     );
 }

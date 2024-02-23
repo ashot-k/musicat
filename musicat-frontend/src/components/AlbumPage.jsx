@@ -46,7 +46,7 @@ export const AlbumPage = () => {
                     </div>
                     <div>
                         <br/>
-                        <table className={"rounded-4 shadow-lg"}>
+                        {albumTracks && albumTracks.length > 0 && <table className={"rounded-4 shadow-lg"}>
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -55,8 +55,7 @@ export const AlbumPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {albumTracks
-                                && albumTracks.map((track, idx) => {
+                            {albumTracks.map((track, idx) => {
                                     return <tr className={"track"}>
                                         <td>{idx + 1}</td>
                                         <td>{track.title}</td>
@@ -64,7 +63,7 @@ export const AlbumPage = () => {
                                     </tr>
                                 })}
                             </tbody>
-                        </table>
+                        </table>}
                     </div>
                 </div>
                 ||

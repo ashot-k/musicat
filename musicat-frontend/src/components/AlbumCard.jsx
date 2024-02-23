@@ -6,7 +6,7 @@ export const AlbumCard = ({album}) => {
             <Link to={"/album/" + album.id}>
                 <div className={"image-container"}>
                     <img className="card-image rounded-1"
-                         src="https://upload.wikimedia.org/wikipedia/en/4/45/Blackwaterpark.jpg"
+                         src=""
                          alt="Card image cap"/>
                 </div>
             </Link>
@@ -14,7 +14,7 @@ export const AlbumCard = ({album}) => {
                 <Link to={"/album/" + album.id} className={"text-decoration-none"}>
                     <h5 className="h5 card-title">{album.title}</h5>
                     <p className="card-text">
-                        by <Link to={"/artist/" + album.artist}> {album.artistName}</Link>
+                        by <Link to={"/artist/" + album.artist}>{album.artistName}</Link>
                     </p>
                 </Link>
                 <div className={"p-1 d-flex justify-content-start"}>

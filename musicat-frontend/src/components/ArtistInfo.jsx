@@ -4,7 +4,7 @@ export const ArtistInfo = ({artist}) => {
         <div className={"artist-info w-100 d-flex flex-column gap-4"}>
             <div className={"artist-page-img-container d-flex w-100"}>
                 <img className={"artist-page-img"}
-                     src={"https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTeXxYjRCi6Cu8jzZV0Zvg2ymAsZ4Ouz_ur-mgF8to0mOKpn76YwdGlxnqy7ETCt7h_twFe"}
+                     src={""}
                      alt={"Not image available"}/>
             </div>
             <div className={"artist-details w-100 d-flex flex-column gap-2"}>

@@ -8,11 +8,18 @@ import com.ashot.musicat.repo.AlbumRepository;
 import com.ashot.musicat.repo.ArtistRepository;
 import com.ashot.musicat.repo.TrackRepository;
 import com.ashot.musicat.utils.ExceptionMessages;
+import com.ashot.musicat.utils.ImageStorage;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +50,14 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     public AlbumDTO albumToAlbumDTO(Album album) {
-        return new AlbumDTO(album.getId(), album.getTitle(), album.getArtist().getId(), album.getArtist().getName(), album.getGenre(), album.getFormat());
+        return new AlbumDTO(
+                album.getId(),
+                album.getTitle(),
+                album.getArtist().getId(),
+                album.getArtist().getName(),
+                album.getGenre(),
+                album.getFormat(),
+                "http://192.168.1.64:8080/api/album/" + album.getId() + "/image");
     }
 
     public Album albumDTOtoAlbum(AlbumDTO albumDTO) {
@@ -59,17 +73,21 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public AlbumDTO save(AlbumDTO albumDTO) {
+    public AlbumDTO save(AlbumDTO albumDTO, MultipartFile image) {
         Album album = albumDTOtoAlbum(albumDTO);
+        if(image != null){
+            if(ImageStorage.saveImage(image))
+                album.setImageFile(image.getOriginalFilename());
+        }
         return albumToAlbumDTO(albumRepo.save(album));
     }
 
     @Override
     public AlbumDTO update(AlbumDTO albumDTO, Long id) {
         Optional<Album> albumOptional = albumRepo.findById(id);
-        if (albumOptional.isEmpty()) {
+        if (albumOptional.isEmpty())
             throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id));
-        }
+
         Album album = albumOptional.get();
         Album updatedAlbum = albumDTOtoAlbum(albumDTO);
         updatedAlbum.setId(id);
@@ -105,10 +123,26 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public List<Track> addTracks(Long albumId, List<Track> track) {
+        Album album = albumRepo.findById(albumId)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), albumId)));
+        album.getTracks().addAll(track);
+        albumRepo.save(album);
+        return track;
+    }
+
+    @Override
     public void deleteTrackById(Long albumId, Long trackId) {
         Album album = albumRepo.findById(albumId)
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), albumId)));
         album.getTracks().removeIf(track -> track.getId().equals(trackId));
         albumRepo.save(album);
+    }
+
+    @Override
+    public ByteArrayResource getImage(Long id) throws IOException {
+        Album album = albumRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id)));
+        return ImageStorage.getImage(album.getImageFile());
     }
 }

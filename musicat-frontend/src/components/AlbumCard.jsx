@@ -6,8 +6,8 @@ export const AlbumCard = ({album}) => {
             <Link className={"text-decoration-none"} to={"/album/" + album.id}>
                 <div className={"image-container"}>
                     <img className="card-image rounded-1"
-                         src=""
-                         alt="Card image cap"/>
+                                        src={album.imageURL}
+                                        alt="Card image cap"/>
                 </div>
             </Link>
             <div className="card-body d-flex flex-column gap-3 justify-content-between w-100">

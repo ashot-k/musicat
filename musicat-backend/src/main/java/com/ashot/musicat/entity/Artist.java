@@ -23,6 +23,9 @@ public class Artist {
     private List<Album> albums;
 
     private String imageFile;
+    @Transient
+    private static final String IMAGE_FILE_PREFIX = "artist_";
+
     public Artist() {
     }
 

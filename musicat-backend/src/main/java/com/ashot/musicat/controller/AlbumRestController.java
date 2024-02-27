@@ -7,6 +7,7 @@ import com.ashot.musicat.entity.Track;
 import com.ashot.musicat.service.AlbumService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -39,8 +41,8 @@ public class AlbumRestController {
     }
 
     @PostMapping
-    public ResponseEntity<AlbumDTO> addAlbum(@Valid @RequestPart("album") AlbumDTO album, @RequestPart(value = "file") MultipartFile file){
-        return new ResponseEntity<>(albumService.save(album), HttpStatus.CREATED);
+    public ResponseEntity<AlbumDTO> addAlbum(@Valid @RequestPart("album") AlbumDTO album, @RequestPart(value = "file") MultipartFile image){
+        return new ResponseEntity<>(albumService.save(album, image), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -65,9 +67,18 @@ public class AlbumRestController {
         return new ResponseEntity<>("Deleted track with id: " + trackId + " from album with id: " + id, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/tracks")
+    @PostMapping("/{id}/track")
     public ResponseEntity<Track> addTrack(@PathVariable Long id, @RequestBody Track track){
         return new ResponseEntity<>(albumService.addTrack(id, track), HttpStatus.CREATED);
     }
+    @PostMapping("/{id}/tracks")
+    public ResponseEntity<List<Track>> addTracks(@PathVariable Long id, @RequestBody List<Track> tracks){
+        return new ResponseEntity<>(albumService.addTracks(id, tracks), HttpStatus.CREATED);
+    }
 
+
+    @GetMapping(value = "{id}/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<ByteArrayResource> image(@PathVariable Long id) throws IOException {
+        return new ResponseEntity<>(albumService.getImage(id), HttpStatus.OK);
+    }
 }

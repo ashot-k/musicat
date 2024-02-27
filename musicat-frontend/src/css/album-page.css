@@ -1,3 +1,10 @@
+
+.album-image{
+  width: 248px;
+  height: 248px;
+}
+
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;

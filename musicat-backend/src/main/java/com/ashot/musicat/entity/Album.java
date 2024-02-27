@@ -26,6 +26,9 @@ public class Album {
     private String format;
     private String genre;
     private String imageFile;
+
+    @Transient
+    private static final String IMAGE_FILE_PREFIX = "album_";
     public Album(String title, Artist artist, List<Track> tracks) {
         this.title = title;
         this.artist = artist;

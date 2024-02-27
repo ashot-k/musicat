@@ -1,6 +1,7 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getAlbum, getTracks} from "../MusicatAPI";
+import '../css/album-page.css'
 
 export const AlbumPage = () => {
     const params = useParams();
@@ -36,7 +37,7 @@ export const AlbumPage = () => {
         <div className={"content rounded-4 d-flex flex-column  justify-content-center"}>
             {albumInfo && !albumInfo.error &&
                 <div className={"w-100 d-flex flex-column gap-4 align-items-start"}>
-                    <img src={""} alt={"Image not available"}></img>
+                    <img src={albumInfo.imageURL} className={"album-image"} alt={"Image not available"}></img>
                     <h1 className={"h1 content-title"}>{albumInfo.title}</h1>
                     <div>
                         <h4 className={"h4"}>Artist: <Link

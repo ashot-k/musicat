@@ -25,7 +25,7 @@ public class Album {
     private List<Track> tracks;
     private String format;
     private String genre;
-
+    private String imageFile;
     public Album(String title, Artist artist, List<Track> tracks) {
         this.title = title;
         this.artist = artist;
@@ -53,6 +53,32 @@ public class Album {
         this.genre = genre;
     }
 
+    public Album(String title, Artist artist, String format, String genre, String imageFile) {
+        this.title = title;
+        this.artist = artist;
+        this.format = format;
+        this.genre = genre;
+        this.imageFile = imageFile;
+    }
+
+    public Album(Long id, String title, Artist artist, List<Track> tracks, String format, String genre, String imageFile) {
+        this.id = id;
+        this.title = title;
+        this.artist = artist;
+        this.tracks = tracks;
+        this.format = format;
+        this.genre = genre;
+        this.imageFile = imageFile;
+    }
+
+    public Album(String title, Artist artist, List<Track> tracks, String format, String genre, String imageFile) {
+        this.title = title;
+        this.artist = artist;
+        this.tracks = tracks;
+        this.format = format;
+        this.genre = genre;
+        this.imageFile = imageFile;
+    }
 
     public Album(Long id, String title) {
         this.id = id;
@@ -112,5 +138,13 @@ public class Album {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
     }
 }

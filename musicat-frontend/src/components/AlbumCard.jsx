@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 export const AlbumCard = ({album}) => {
     return (
         <div key={album.id} className={"card d-flex flex-column align-items-center rounded-2"}>
-            <Link to={"/album/" + album.id}>
+            <Link className={"text-decoration-none"} to={"/album/" + album.id}>
                 <div className={"image-container"}>
                     <img className="card-image rounded-1"
                          src=""

@@ -9,8 +9,10 @@ import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class AlbumRestController {
     }
 
     @PostMapping
-    public ResponseEntity<AlbumDTO> addAlbum(@Valid @RequestBody AlbumDTO album){
+    public ResponseEntity<AlbumDTO> addAlbum(@Valid @RequestPart("album") AlbumDTO album, @RequestPart(value = "file") MultipartFile file){
         return new ResponseEntity<>(albumService.save(album), HttpStatus.CREATED);
     }
 

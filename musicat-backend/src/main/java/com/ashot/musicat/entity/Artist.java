@@ -21,6 +21,8 @@ public class Artist {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "artist")
     @JsonIgnore
     private List<Album> albums;
+
+    private String imageFile;
     public Artist() {
     }
 
@@ -35,6 +37,21 @@ public class Artist {
         this.description = description;
         this.members = members;
         this.albums = albums;
+    }
+
+    public Artist(String name, String description, String members, String imageFile) {
+        this.name = name;
+        this.description = description;
+        this.members = members;
+        this.imageFile = imageFile;
+    }
+
+    public Artist(String name, String description, String members, List<Album> albums, String imageFile) {
+        this.name = name;
+        this.description = description;
+        this.members = members;
+        this.albums = albums;
+        this.imageFile = imageFile;
     }
 
     public Long getId() {
@@ -75,5 +92,13 @@ public class Artist {
 
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
+    }
+
+    public String getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
     }
 }

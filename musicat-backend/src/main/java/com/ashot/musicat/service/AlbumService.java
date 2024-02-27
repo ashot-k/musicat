@@ -19,6 +19,7 @@ public interface AlbumService {
 
     Track addTrack(Long id, Track track);
     void deleteTrackById(Long albumId, Long trackId);
+
     AlbumDTO albumToAlbumDTO(Album album);
     Album albumDTOtoAlbum(AlbumDTO albumDTO);
 }

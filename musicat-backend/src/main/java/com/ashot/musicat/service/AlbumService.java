@@ -16,7 +16,7 @@ public interface AlbumService {
     AlbumDTO getById(Long id);
     Page<AlbumDTO> getAll(int pageNo, int pageSize);
     AlbumDTO save(AlbumDTO album, MultipartFile image);
-    AlbumDTO update(AlbumDTO albumDTO, Long id);
+    AlbumDTO update(AlbumDTO albumDTO, Long id, MultipartFile image);
     void delete(Long id);
     List<Track> getAlbumTracks(Long id);
 

@@ -1,6 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/template.css'
-import './css/nav-bar.css';
 import './css/album-list.css'
 import './css/card.scss'
 import {useEffect, useState} from "react";
@@ -22,7 +20,7 @@ function Home() {
     }, []);
 
     return (
-        <div className="content rounded-4 d-flex flex-column gap-5 align-items-center justify-content-center">
+        <div className=" rounded-4 d-flex flex-column gap-5 align-items-center justify-content-center">
             {artists && <ArtistList artists={artists}/>
                 || !isPending && !artists &&
                 <h1 className={"display-3"}>Could not load Page</h1>

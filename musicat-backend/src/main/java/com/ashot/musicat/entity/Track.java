@@ -10,8 +10,6 @@ public class Track {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-
-
     @NotBlank
     @NotNull
     private String title;

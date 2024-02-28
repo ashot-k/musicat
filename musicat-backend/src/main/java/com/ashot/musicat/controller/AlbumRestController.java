@@ -7,6 +7,7 @@ import com.ashot.musicat.entity.Track;
 import com.ashot.musicat.service.AlbumService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -41,13 +42,12 @@ public class AlbumRestController {
     }
 
     @PostMapping
-    public ResponseEntity<AlbumDTO> addAlbum(@Valid @RequestPart("album") AlbumDTO album, @RequestPart(value = "file") MultipartFile image){
+    public ResponseEntity<AlbumDTO> addAlbum(@Valid @RequestPart("album") AlbumDTO album, @RequestPart(value = "image", required = false) MultipartFile image){
         return new ResponseEntity<>(albumService.save(album, image), HttpStatus.CREATED);
     }
-
     @PutMapping("/{id}")
-    public ResponseEntity<AlbumDTO> updateAlbum(@Valid @RequestBody AlbumDTO albumDTO, @PathVariable Long id){
-        return new ResponseEntity<>(albumService.update(albumDTO, id), HttpStatus.OK);
+    public ResponseEntity<AlbumDTO> updateAlbum(@Valid @RequestPart("album") AlbumDTO albumDTO, @PathVariable Long id, @RequestPart(value = "image", required = false) MultipartFile image){
+        return new ResponseEntity<>(albumService.update(albumDTO, id, image), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -72,10 +72,9 @@ public class AlbumRestController {
         return new ResponseEntity<>(albumService.addTrack(id, track), HttpStatus.CREATED);
     }
     @PostMapping("/{id}/tracks")
-    public ResponseEntity<List<Track>> addTracks(@PathVariable Long id, @RequestBody List<Track> tracks){
+    public ResponseEntity<List<Track>> addTracks(@PathVariable Long id, @RequestBody List<Track> tracks) {
         return new ResponseEntity<>(albumService.addTracks(id, tracks), HttpStatus.CREATED);
     }
-
 
     @GetMapping(value = "{id}/image", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<ByteArrayResource> image(@PathVariable Long id) throws IOException {

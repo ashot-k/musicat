@@ -1,5 +1,7 @@
 package com.ashot.musicat.utils;
 
+import com.ashot.musicat.entity.Album;
+import com.ashot.musicat.entity.Artist;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -48,15 +50,26 @@ public class ImageStorage {
         currentStoragePath = path;
     }
 
-    public static boolean saveImage(MultipartFile imageFile) {
-        File image = new File(currentStoragePath + "\\" + imageFile.getOriginalFilename());
+    public static boolean saveAlbumImage(MultipartFile imageFile){
+        return saveImage(imageFile, Album.IMAGE_FILE_PREFIX + imageFile.getOriginalFilename());
+    }
+    public static boolean saveArtistImage(MultipartFile imageFile){
+        return saveImage(imageFile, Artist.IMAGE_FILE_PREFIX + imageFile.getOriginalFilename());
+    }
+
+    private static boolean saveImage(MultipartFile imageFile, String fileName) {
+        File image = new File(currentStoragePath + "\\" + fileName);
 
         try (OutputStream os = new FileOutputStream(image)) {
             os.write(imageFile.getBytes());
+            return true;
         } catch (IOException e) {
             return false;
         }
-        return true;
+    }
+    public static boolean deleteImage(String imageFileName){
+        File image = new File(currentStoragePath + "\\" + imageFileName);
+        return image.delete();
     }
 
 }

@@ -34,7 +34,7 @@ export const AlbumPage = () => {
     }
 
     return (
-        <div className={"content rounded-4 d-flex flex-column  justify-content-center"}>
+        <div className={"rounded-4 d-flex flex-column  justify-content-center"}>
             {albumInfo && !albumInfo.error &&
                 <div className={"w-100 d-flex flex-column gap-4 align-items-start"}>
                     <img src={albumInfo.imageURL} className={"album-image"} alt={"Image not available"}></img>

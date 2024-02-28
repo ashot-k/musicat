@@ -24,7 +24,7 @@ public class Artist {
 
     private String imageFile;
     @Transient
-    private static final String IMAGE_FILE_PREFIX = "artist_";
+    public static final String IMAGE_FILE_PREFIX = "artist_image_";
 
     public Artist() {
     }
@@ -98,10 +98,10 @@ public class Artist {
     }
 
     public String getImageFile() {
-        return imageFile;
+            return imageFile;
     }
 
     public void setImageFile(String imageFile) {
-        this.imageFile = imageFile;
+        this.imageFile = IMAGE_FILE_PREFIX + imageFile;
     }
 }

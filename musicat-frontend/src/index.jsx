@@ -2,26 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Home from './Home';
 
+import './css/template.css'
 import {createBrowserRouter, RouterProvider, Routes} from 'react-router-dom';
 import {ErrorPage} from "./components/ErrorPage";
 import {AlbumPage} from "./components/AlbumPage";
-import {NavBar} from "./components/NavBar";
 import {ArtistPage} from "./components/ArtistPage";
+import {Template} from "./Template";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <div className={"d-flex flex-column gap-3 align-items-center"}><NavBar/><Home/></div>,
+        element: <Template content={<Home/>}></Template>,
         errorElement: <ErrorPage/>
     },
     {
         path: "/album/:albumId",
-        element: <div className={"d-flex flex-column gap-3 align-items-center"}><NavBar/><AlbumPage/> </div>,
+        element: <Template content={<AlbumPage/>}></Template>,
         errorElement: <ErrorPage/>
     },
     {
         path: "/artist/:artistId",
-        element: <div className={"d-flex flex-column gap-3 align-items-center"}><NavBar/><ArtistPage/> </div>,
+        element: <Template content={<ArtistPage/>}></Template>,
         errorElement: <ErrorPage/>
     }
 ]);

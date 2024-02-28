@@ -3,10 +3,12 @@
 }
 
 @media screen and (min-width: 800px) {
+
   .artist-page-img {
     width: 248px;
     height: 248px;
   }
+
 }
 
 @media screen and (max-width: 600px) {
@@ -15,7 +17,13 @@
     width: 80%;
     height: 80%;
   }
+
   .artist-page-img-container {
     justify-content: center;
   }
+
+}
+
+.additional-info {
+  font-size: 0.75rem;
 }

@@ -20,7 +20,7 @@ export const ArtistPage = ({artist}) => {
             .catch((error)=> console.log(error));
     }, []);
     return(
-        <div className="content rounded-4 d-flex flex-column gap-5  justify-content-center">
+        <div className="rounded-4 d-flex flex-column gap-5  justify-content-center">
             {artistInfo && <ArtistInfo artist={artistInfo}/>}
             {artistAlbums && <AlbumList albums={artistAlbums}/>}
         </div>

@@ -28,7 +28,8 @@ public class Album {
     private String imageFile;
 
     @Transient
-    private static final String IMAGE_FILE_PREFIX = "album_";
+    public static final String IMAGE_FILE_PREFIX = "album_image_";
+
     public Album(String title, Artist artist, List<Track> tracks) {
         this.title = title;
         this.artist = artist;
@@ -42,12 +43,14 @@ public class Album {
         this.format = format;
         this.genre = genre;
     }
+
     public Album(String title, Artist artist, String format, String genre) {
         this.title = title;
         this.artist = artist;
         this.format = format;
         this.genre = genre;
     }
+
     public Album(Long id, String title, Artist artist, String format, String genre) {
         this.id = id;
         this.title = title;
@@ -131,6 +134,7 @@ public class Album {
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -144,10 +148,10 @@ public class Album {
     }
 
     public String getImageFile() {
-        return imageFile;
+            return  imageFile;
     }
 
     public void setImageFile(String imageFile) {
-        this.imageFile = imageFile;
+        this.imageFile = IMAGE_FILE_PREFIX + imageFile;
     }
 }

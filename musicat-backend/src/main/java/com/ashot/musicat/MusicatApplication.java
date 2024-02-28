@@ -21,5 +21,4 @@ public class MusicatApplication{
         System.out.println(AlbumFormat.formats);
         SpringApplication.run(MusicatApplication.class, args);
     }
-
 }

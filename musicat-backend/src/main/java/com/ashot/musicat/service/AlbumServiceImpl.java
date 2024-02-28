@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -49,17 +50,28 @@ public class AlbumServiceImpl implements AlbumService {
                 .map(this::albumToAlbumDTO);
     }
 
+    @Override
     public AlbumDTO albumToAlbumDTO(Album album) {
-        return new AlbumDTO(
-                album.getId(),
-                album.getTitle(),
-                album.getArtist().getId(),
-                album.getArtist().getName(),
-                album.getGenre(),
-                album.getFormat(),
-                "http://192.168.1.64:8080/api/album/" + album.getId() + "/image");
-    }
+        if (album.getImageFile() != null)
+            return new AlbumDTO(
+                    album.getId(),
+                    album.getTitle(),
+                    album.getArtist().getId(),
+                    album.getArtist().getName(),
+                    album.getGenre(),
+                    album.getFormat(),
+                    "http://192.168.1.64:8080/api/album/" + album.getId() + "/image");
+        else
+            return new AlbumDTO(
+                    album.getId(),
+                    album.getTitle(),
+                    album.getArtist().getId(),
+                    album.getArtist().getName(),
+                    album.getGenre(),
+                    album.getFormat(),
+                    null); }
 
+    @Override
     public Album albumDTOtoAlbum(AlbumDTO albumDTO) {
         Album album = new Album();
         Optional<Artist> artist = artistRepo.findById(albumDTO.artist());
@@ -75,26 +87,30 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public AlbumDTO save(AlbumDTO albumDTO, MultipartFile image) {
         Album album = albumDTOtoAlbum(albumDTO);
-        if(image != null){
-            if(ImageStorage.saveImage(image))
+        if (image != null) {
+            if (ImageStorage.saveAlbumImage(image))
                 album.setImageFile(image.getOriginalFilename());
         }
         return albumToAlbumDTO(albumRepo.save(album));
     }
 
     @Override
-    public AlbumDTO update(AlbumDTO albumDTO, Long id) {
+    public AlbumDTO update(AlbumDTO updatedAlbumDTO, Long id, MultipartFile image) {
         Optional<Album> albumOptional = albumRepo.findById(id);
         if (albumOptional.isEmpty())
             throw new EntityNotFoundException(ExceptionMessages.EntityNotFoundException(Album.class.getSimpleName(), id));
-
         Album album = albumOptional.get();
-        Album updatedAlbum = albumDTOtoAlbum(albumDTO);
+        ImageStorage.deleteImage(album.getImageFile());
+
+        Album updatedAlbum = albumDTOtoAlbum(updatedAlbumDTO);
+        if (image != null) {
+            if (ImageStorage.saveAlbumImage(image)) {
+                updatedAlbum.setImageFile(image.getOriginalFilename());
+            }
+        }
         updatedAlbum.setId(id);
         updatedAlbum.setTracks(album.getTracks());
-        album = updatedAlbum;
-
-        return albumToAlbumDTO(albumRepo.save(album));
+        return albumToAlbumDTO(albumRepo.save(updatedAlbum));
     }
 
     @Override
